@@ -1,9 +1,9 @@
-#if (ARDUINO >= 100)
+//#if (ARDUINO >= 100)
  #include <Arduino.h>
-#else
- #include <WProgram.h>
- #include <pins_arduino.h>
-#endif
+//#else
+// #include <WProgram.h>
+// #include <pins_arduino.h>
+//#endif
 
 #define MAX_PARTICLES 33
 
