@@ -1,37 +1,48 @@
 #define MAX_PARTICLES 33
 
-struct particle {
-    float velocity;
-    int redColor;
-    int greenColor;
-    int blueColor;
-    int dimmed;
-    unsigned long int startTime;
-    float startStripPosition;
-    float currentStripPosition;
-};
+typedef struct {
+  float x;
+  float y; 
+  float z;
+} Coord3D;
+
+typedef struct {
+    Coord3D velocity;
+    byte redColor;
+    byte greenColor;
+    byte blueColor;
+    boolean dimmed;
+    Coord3D coord;
+} Particle;
 
 class ParticleEmitter {
 
  public:
 
-  ParticleEmitter(int n);
+  ParticleEmitter(uint16_t numPixels, uint8_t maxColor);
   ParticleEmitter(void);
   void
     begin(void);
-  particle
-    updateParticle(int i),
+  Particle
+    updateParticle(uint16_t i, boolean respawn),
     newParticle();
   float
-    stripPosition;
-  int
+    stripPosition,
+    maxVelocity;    
+  uint16_t
     numPixels,    // Number of RGB LEDs in strip
     numParticles;
+  uint8_t
+    maxColor;
+  bool
+    respawnOnOtherSide,
+    threed;
 
  private:
 
-  float
-    maxVelocity;
-  particle
+  Particle
     particles[MAX_PARTICLES];
+  float
+    masterVelocityDeltaDirection,
+    zDeltaDirection;
 };

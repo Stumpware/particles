@@ -9,66 +9,91 @@ MIT license
 #include "application.h"
 
 #define MAX_COLOR 255
+#define GOLDEN_RATIO 1.618
 
 /*****************************************************************************/
 
-ParticleEmitter::ParticleEmitter(int n) {
-    numPixels = n;
+ParticleEmitter::ParticleEmitter(uint16_t _numPixels, uint8_t _maxColor) {
+    maxColor = fmin(MAX_COLOR, fmax(0, _maxColor));
+    numPixels = _numPixels;
     numParticles = MAX_PARTICLES;
-    maxVelocity = float(numParticles / 5000.0);
-    stripPosition = (random(70) + 15) / 100.0;  // 0.0 - 1.0
+    maxVelocity = (random(100) / 100.0 * 0.028) + 0.004;
+    stripPosition = 0.5;
+    zDeltaDirection = 1.0;
+    threed = true;
     
-    for (int i=0; i < MAX_PARTICLES; i++) {
+    for (int i=0; i < numParticles; i++) {
         particles[i] = newParticle();
     }
 }
 
-particle ParticleEmitter::newParticle() {
-    particle p;
+Particle ParticleEmitter::newParticle() {
+    Particle p;
     
-    int direction = (random(2) == 0 ? 1 : -1);
-    int maxColor = MAX_COLOR * (1.0 - (random(50) / 100));
+    p.coord.x = random(67) / 100.0 + 0.33;
+    p.coord.y = 0.0;
+    p.coord.z = (threed ? random(100) / 100.0 : 0.0);
 
-    p.velocity = ((random(99) + 1) / 100.0) * direction;
-    
-    if (direction > 0) {
-        p.redColor = random(maxColor);
-        p.greenColor = random(maxColor * 0.25);
-        p.blueColor = random(maxColor * 0.75);
-    }
-    else {
-        p.redColor = random(maxColor);
-        p.greenColor = random(maxColor * 0.25);
-        p.blueColor = random(maxColor * 0.75);
-    }
-    
-    p.startStripPosition = stripPosition;
-    p.currentStripPosition = p.startStripPosition;
-    p.dimmed = 0;
+    int8_t direction = p.coord.x > 0.5 ? -1 : 1;
+    p.velocity.x = ((random(89) + 10) / 100.0) * direction;
 
+    direction = (random(2) == 0 ? 1 : -1);    
+    p.velocity.y = 0.0;
+    p.velocity.z = (random(90) * M_PI/180.0);
+
+    uint8_t prtMaxColor = maxColor * (1.0 - (random(50) / 100.0));
+
+    p.redColor = random(prtMaxColor);
+    p.greenColor = random(prtMaxColor);
+    p.blueColor = random(prtMaxColor);
+
+    p.dimmed = false;        
     return p;
 }
 
 void ParticleEmitter::begin(void) {
 }
 
-particle ParticleEmitter::updateParticle(int i) {
-    particle *p = &particles[i];
-    
-    p->currentStripPosition = p->currentStripPosition +
-                              (maxVelocity * p->velocity);  
-
+Particle ParticleEmitter::updateParticle(uint16_t i, boolean respawn) {
+    Particle *p = &particles[i];    
     p->dimmed = (random(3) == 0 ? 1 : 0);
-    
-    if (0) {
-        if (p->currentStripPosition < 0.0)
-            p->currentStripPosition = 1.0;
-        else if (p->currentStripPosition > 1.0)
-            p->currentStripPosition = 0.0;
+
+    p->coord.x += (maxVelocity * p->velocity.x) * (1.0 - p->coord.z);
+    p->coord.y += (maxVelocity * p->velocity.y) * (1.0 - p->coord.z);
+
+
+    // Z velocity acts as theta
+    p->coord.z = sin(p->velocity.z);
+    p->velocity.z += M_PI/350.0 * zDeltaDirection;
+
+    if (p->velocity.z >= M_PI/2 || p->velocity.z <= M_PI/90) {
+        zDeltaDirection *= -1.0;
+    }
+
+    if (respawnOnOtherSide) {        
+        if (p->coord.x < 0.0) {
+            p->coord.x = 1.0;
+            p->velocity.x *= GOLDEN_RATIO;
+        }
+        else if (p->coord.x > 1.0) {
+            p->coord.x = 0.0;            
+            p->velocity.x *= GOLDEN_RATIO;
+        }
+
+        if (p->coord.y < 0.0) {
+            p->coord.y = 1.0;            
+            p->velocity.y *= GOLDEN_RATIO;
+        }
+        else if (p->coord.y > 1.0) {
+            p->coord.y = 0.0;            
+            p->velocity.y *= GOLDEN_RATIO;
+        }
     }
     else {
-        if (p->currentStripPosition < -1.0 || p->currentStripPosition > 2.0)
-            *p = newParticle();
+        if (p->coord.x < 0.0 || p->coord.x > 1.0 ||
+            p->coord.y < 0.0 || p->coord.y > 1.0) {
+            *p = newParticle();            
+        }
     }
 
     return *p;
