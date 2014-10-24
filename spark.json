@@ -1,0 +1,7 @@
+{
+    "name": "particles",
+    "version": "0.0.1",
+    "author": "Mark Anderson and Chad Berkley <cberkley@gmail.com>",
+    "license": "MIT",
+    "description": "A library for creating particle trails on LED strips"
+}
