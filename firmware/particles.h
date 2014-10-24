@@ -1,4 +1,6 @@
 #include <stdint.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 #define MAX_PARTICLES 33
 
