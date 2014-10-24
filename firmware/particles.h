@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 #define MAX_PARTICLES 33
 
 typedef struct {
