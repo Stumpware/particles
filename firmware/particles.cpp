@@ -10,7 +10,7 @@ MIT license
 
 /*****************************************************************************/
 
-ParticleEmitter::ParticleEmitter(uint16_t n) {
+ParticleEmitter::ParticleEmitter(int n) {
     numPixels = n;
     numParticles = MAX_PARTICLES;
     maxVelocity = float(numParticles / 5000.0);
@@ -24,10 +24,10 @@ ParticleEmitter::ParticleEmitter(uint16_t n) {
 particle ParticleEmitter::newParticle() {
     particle p;
     
-    int8_t direction = (random(2) == 0 ? 1 : -1);
+    int direction = (random(2) == 0 ? 1 : -1);
 
-//    uint8_t maxColor = (random(2) == 0 ? MAX_COLOR/(random(35)+5) : 0);
-    uint8_t maxColor = MAX_COLOR * (1.0 - (random(50) / 100));
+//    int maxColor = (random(2) == 0 ? MAX_COLOR/(random(35)+5) : 0);
+    int maxColor = MAX_COLOR * (1.0 - (random(50) / 100));
 
     p.velocity = ((random(99) + 1) / 100.0) * direction;
     
@@ -53,7 +53,7 @@ particle ParticleEmitter::newParticle() {
 void ParticleEmitter::begin(void) {
 }
 
-particle ParticleEmitter::updateParticle(uint16_t i) {
+particle ParticleEmitter::updateParticle(int i) {
     particle *p = &particles[i];
     
     p->currentStripPosition = p->currentStripPosition +

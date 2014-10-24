@@ -2,10 +2,10 @@
 
 struct particle {
     float velocity;
-    uint8_t redColor;
-    uint8_t greenColor;
-    uint8_t blueColor;
-    uint8_t dimmed;
+    int redColor;
+    int greenColor;
+    int blueColor;
+    int dimmed;
     unsigned long int startTime;
     float startStripPosition;
     float currentStripPosition;
@@ -15,16 +15,16 @@ class ParticleEmitter {
 
  public:
 
-  ParticleEmitter(uint16_t n);
+  ParticleEmitter(int n);
   ParticleEmitter(void);
   void
     begin(void);
   particle
-    updateParticle(uint16_t i),
+    updateParticle(int i),
     newParticle();
   float
     stripPosition;
-  uint16_t
+  int
     numPixels,    // Number of RGB LEDs in strip
     numParticles;
 
