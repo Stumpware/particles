@@ -28,7 +28,7 @@ class ParticleEmitter {
   void
     begin(void);
   Particle
-    updateParticle(uint16_t i, bool respawn),
+    updateParticle(uint16_t i),
     newParticle();
   float
     stripPosition,

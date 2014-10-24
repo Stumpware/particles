@@ -54,7 +54,7 @@ Particle ParticleEmitter::newParticle() {
 void ParticleEmitter::begin(void) {
 }
 
-Particle ParticleEmitter::updateParticle(uint16_t i, bool respawn) {
+Particle ParticleEmitter::updateParticle(uint16_t i) {
     Particle *p = &particles[i];    
     p->dimmed = (random(3) == 0 ? 1 : 0);
 
