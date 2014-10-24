@@ -1,6 +1,7 @@
 Particles create particle trails of varyin colors on an LED strip. 
 
-`	#include "particles.h"
+`	
+	#include "particles.h"
 	
 	ParticleEmitter emitter = ParticleEmitter(PIXEL_COUNT);
 
