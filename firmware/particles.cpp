@@ -1,12 +1,11 @@
-#include "particles.h"
-
 /*
 Arduino library to simulate particle emission with an RGB LED strip.
 Copyright (C) Stumpware
 MIT license
 */
 
-#include "ParticleEmitter.h"
+#include "particles.h"
+
 #define MAX_COLOR 255
 
 /*****************************************************************************/
