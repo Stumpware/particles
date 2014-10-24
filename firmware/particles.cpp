@@ -26,9 +26,7 @@ particle ParticleEmitter::newParticle() {
     particle p;
     
     int direction = ((rand() * 2) == 0 ? 1 : -1);
-
-//    int maxColor = (rand(2) == 0 ? MAX_COLOR/(rand(35)+5) : 0);
-    int maxColor = MAX_COLOR * (1.0 - (rand(50) / 100));
+    int maxColor = MAX_COLOR * (1.0 - ((rand() * 50) / 100));
 
     p.velocity = (((rand() * 99) + 1) / 100.0) * direction;
     
