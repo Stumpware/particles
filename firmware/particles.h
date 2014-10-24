@@ -8,9 +8,9 @@ typedef struct {
 
 typedef struct {
     Coord3D velocity;
-    byte redColor;
-    byte greenColor;
-    byte blueColor;
+    uint8_t redColor;
+    uint8_t greenColor;
+    uint8_t blueColor;
     boolean dimmed;
     Coord3D coord;
 } Particle;
