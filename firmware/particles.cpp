@@ -6,6 +6,7 @@ MIT license
 
 #include "particles.h"
 #include <stdlib.h>
+#include "application.h"
 
 #define MAX_COLOR 255
 
@@ -15,7 +16,7 @@ ParticleEmitter::ParticleEmitter(int n) {
     numPixels = n;
     numParticles = MAX_PARTICLES;
     maxVelocity = float(numParticles / 5000.0);
-    stripPosition = ((rand() * 70) + 15) / 100.0;  // 0.0 - 1.0
+    stripPosition = ((random(70) + 15) / 100.0;  // 0.0 - 1.0
     
     for (int i=0; i < MAX_PARTICLES; i++) {
         particles[i] = newParticle();
@@ -25,20 +26,20 @@ ParticleEmitter::ParticleEmitter(int n) {
 particle ParticleEmitter::newParticle() {
     particle p;
     
-    int direction = ((rand() * 2) == 0 ? 1 : -1);
-    int maxColor = MAX_COLOR * (1.0 - ((rand() * 50) / 100));
+    int direction = ((random(2) == 0 ? 1 : -1);
+    int maxColor = MAX_COLOR * (1.0 - ((random(50) / 100));
 
-    p.velocity = (((rand() * 99) + 1) / 100.0) * direction;
+    p.velocity = (((random(99) + 1) / 100.0) * direction;
     
     if (direction > 0) {
-        p.redColor = rand() * maxColor;
-        p.greenColor = rand() * (maxColor * 0.25);
-        p.blueColor = rand() * (maxColor*0.75);
+        p.redColor = random(maxColor);
+        p.greenColor = random(maxColor * 0.25);
+        p.blueColor = random(maxColor * 0.75);
     }
     else {
-        p.redColor = rand() * maxColor;
-        p.greenColor = rand() * (maxColor*0.25);
-        p.blueColor = rand() * (maxColor*0.75);
+        p.redColor = random(maxColor);
+        p.greenColor = random(maxColor * 0.25);
+        p.blueColor = random(maxColor * 0.75);
     }
     
     p.startStripPosition = stripPosition;
@@ -57,7 +58,7 @@ particle ParticleEmitter::updateParticle(int i) {
     p->currentStripPosition = p->currentStripPosition +
                               (maxVelocity * p->velocity);  
 
-    p->dimmed = (rand() * 3 == 0 ? 1 : 0);
+    p->dimmed = (random(3) == 0 ? 1 : 0);
     
     if (0) {
         if (p->currentStripPosition < 0.0)
