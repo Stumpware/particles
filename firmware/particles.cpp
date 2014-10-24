@@ -6,6 +6,7 @@ MIT license
 
 #include "particles.h"
 #include <stdlib.h>
+#include <math.h>
 #include "application.h"
 
 #define MAX_COLOR 255
