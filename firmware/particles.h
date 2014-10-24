@@ -15,7 +15,7 @@ typedef struct {
     uint8_t redColor;
     uint8_t greenColor;
     uint8_t blueColor;
-    boolean dimmed;
+    bool dimmed;
     Coord3D coord;
 } Particle;
 
@@ -28,7 +28,7 @@ class ParticleEmitter {
   void
     begin(void);
   Particle
-    updateParticle(uint16_t i, boolean respawn),
+    updateParticle(uint16_t i, bool respawn),
     newParticle();
   float
     stripPosition,
